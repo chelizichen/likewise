@@ -19,14 +19,14 @@ export class UsersService
         return this.repo.save(user)
     }
     find(email:string){
-        return this.repo.find({
+        return (this.repo as any).find({
             email:email
         })
     }
 
-    findOne(id:number){
-        return this.repo.findOne({
-            id:id
+    findOne(id:any){
+        return (this.repo as any).findOne({
+            id
         })
     }
 

@@ -1,4 +1,4 @@
-import {IsEmail, IsString} from 'class-validator'
+import {IsEmail, IsOptional, IsString} from 'class-validator'
 export class UserPipe
 {
     @IsString()
@@ -6,4 +6,14 @@ export class UserPipe
 
     @IsEmail()
     email:string
+}
+export class UpdateDTO
+{
+    @IsString()
+    @IsOptional()
+    email:string
+
+    @IsString()
+    @IsOptional()
+    password:string
 }
