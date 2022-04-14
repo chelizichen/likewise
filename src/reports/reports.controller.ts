@@ -4,6 +4,6 @@ import { ReportsService } from "./reports.service";
 @Controller('reports')
 export class ReportsController{
     constructor(private readonly ReportsService:ReportsService) {}
-    @Get()
-    getCpu(){}
+    @Get('test')
+    testGet(){}
 }
