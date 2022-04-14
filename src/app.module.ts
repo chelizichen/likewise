@@ -1,11 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { GoodsModule } from './goods/goods.module';
-
+import { TypeOrmModule } from '@nestjs/typeorm';
+// import { GoodsModule } from './goods/goods.module';
+import { ReportsModule } from './reports/reports.module';
+import { UserEnity } from './users/users.enity';
+import { UsersModule } from './users/users.module';
 @Module({
-  imports: [GoodsModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [TypeOrmModule.forRoot({
+    type:'sqlite', // 数据库类型,
+    database:'db.sqlite',
+    entities:[UserEnity],
+    synchronize:true
+
+  }),ReportsModule,UsersModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

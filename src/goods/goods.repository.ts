@@ -1,4 +1,6 @@
+import { Injectable } from '@nestjs/common'
 import { readFile,writeFile } from 'fs/promises'
+@Injectable()
 export class GoodsRepository{
     async findAll()
     {
@@ -18,6 +20,7 @@ export class GoodsRepository{
         const content = await readFile('goods.json','utf8')
         const message = JSON.parse(content)
         const id = Math.floor(Math.random()*99)
-        message[id] = {id,content:goodsName}
+        message[id] = {id,goodsName}
+        await writeFile("goods.json",JSON.stringify(message),'utf8')
     }
 }
