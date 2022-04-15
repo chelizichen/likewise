@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query,Patch } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Query,Patch, NotFoundException, HttpCode } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import {UpdateDTO, UserPipe} from './user.pipe'
 @Controller('user')
@@ -11,9 +11,15 @@ export class UsersController{
         return this.UsersService.create(body)
     }
     @Get("/:id") // 在Url 中 Id 会被解析称为 string  的类型
-    findUser(@Param("id") id:string)
+    async findUser(@Param("id") id:string)
     {
-        return this.UsersService.findOne(parseInt(id))
+        const user = await this.UsersService.findOne(parseInt(id))
+        if(user === null)
+        {
+            HttpCode(404)
+            throw new NotFoundException('user not found ')
+        }
+        return user
     }
 
     @Get()

@@ -30,6 +30,7 @@ export class UsersService
         })
     }
 
+    // update 时 需要使用 filter 过滤异常
     async update(id:number,attr:Partial<UserEnity>){
         const user = await this.findOne(id)
         if(!user)

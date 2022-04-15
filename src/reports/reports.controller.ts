@@ -5,5 +5,7 @@ import { ReportsService } from "./reports.service";
 export class ReportsController{
     constructor(private readonly ReportsService:ReportsService) {}
     @Get('test')
-    testGet(){}
+    find(){
+        return this.ReportsService.findReports()
+    }
 }
