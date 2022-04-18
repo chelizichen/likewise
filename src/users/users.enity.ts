@@ -4,6 +4,7 @@ export class UserEnity{
     @PrimaryGeneratedColumn()
     id:number;
 
+    @PrimaryColumn()
     @Column()
     email:string;
 

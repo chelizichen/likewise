@@ -6,17 +6,19 @@ import { ReportsEnity } from "./reports.enity";
 @Injectable()
 export class ReportsService
 {
-    constructor(@InjectRepository(ReportsEnity) private readonly Repo : Repository<ReportsEnity>) {
+    constructor(
+        @InjectRepository(ReportsEnity) private readonly Repo : Repository<ReportsEnity>,
         
-    }
-    findReports()
+    ) {}
+    findReports(id:number)
     {
-        return this.Repo.find()
+        return this.Repo.findOneBy({id})
     }
-    createReports()
+    createReports(body)
     {
+        const {price} = body
         const content = this.Repo.create({
-            
+            price
         })
         return this.Repo.save(content)
     }
