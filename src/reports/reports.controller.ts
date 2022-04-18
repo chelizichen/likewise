@@ -15,36 +15,21 @@ export class ReportsController{
     async find(@Param("id") id,@Body() body:UserPipe){
         console.log('被请求了');
         const {email,password} = body
-        try{
-            const data:any = await this.UserService.find(email)
-            if(password === data[0].password)
-            {
-                console.log('验证成功');
-                return this.ReportsService.findReports(parseInt(id))
-            }
-            else
-            {
-                return  new NotFoundException("数据没有找到")
-            }
-        }catch(e)
+        const data:any = await this.UserService.find(email)
+        if(password === data[0].password)
         {
-            console.log(e);
-            // throw new NotFoundException("数据没有找到")
-            // console.log(e);
+            console.log('验证成功');
+            return this.ReportsService.findReports(parseInt(id))
         }
+        else
+        {
+            throw new NotFoundException("数据没有找到")
+        }
+
     }
     @Post("/price")
     create(@Body() body:PriceDTO)
     {
         return this.ReportsService.createReports(body)
     }
-        // if(password === data[0].password)
-        // {
-        //     console.log('验证成功');
-        //     return this.ReportsService.findReports(parseInt(id))
-        // }
-        // console.log(data);
-        // console.log();
-        // console.log(this.UserService.find(email));
-        // if(this.UserService.find(email))
 }

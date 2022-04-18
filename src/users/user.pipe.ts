@@ -1,4 +1,5 @@
-import {IsEmail, IsOptional, IsString} from 'class-validator'
+import { Exclude, Expose } from 'class-transformer'
+import {IsEmail, IsNumber, IsOptional, IsString} from 'class-validator'
 export class UserPipe
 {
     @IsString()
@@ -16,4 +17,23 @@ export class UpdateDTO
     @IsString()
     @IsOptional()
     password:string
+}
+export class UserDTO{
+    // 一个是展示 一个是不展示
+    @Expose()
+    // @Exclude()
+    id:number
+    
+    @Exclude()
+    email:string
+}
+
+export class AdminUserDTO{
+    // 一个是展示 一个是不展示
+    @Expose()
+    // @Exclude()
+    id:number
+    
+    @Expose()
+    email:string
 }
