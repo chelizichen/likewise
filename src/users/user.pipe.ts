@@ -7,6 +7,10 @@ export class UserPipe
 
     @IsEmail()
     email:string
+    
+    @IsOptional()
+    @IsString()
+    userName:string
 }
 export class UpdateDTO
 {
@@ -17,6 +21,10 @@ export class UpdateDTO
     @IsString()
     @IsOptional()
     password:string
+
+    @IsString()
+    @IsOptional()
+    userName:string
 }
 export class UserDTO{
     // 一个是展示 一个是不展示

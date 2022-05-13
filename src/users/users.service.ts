@@ -8,22 +8,32 @@ export class UsersService
 {
     constructor(@InjectRepository(UserEnity) private readonly repo:Repository<UserEnity>){}
     async create(body:UserPipe){
-        const {password,email} = body
-        const f_user = await this.repo.findBy({
+        const {password,email,userName} = body
+        const f_user = await this.repo.findOneBy({
             email
         })
         if(!f_user){
             const c_user =  await this.repo.create({
                 password,
-                email
+                email,
+                userName
             })  
             return await this.repo.save(c_user)
         }
         else
         {
-            return  {
-                Code:301,
-                msg:'用户已存在'
+            if(f_user.email === email && f_user.password === password ){
+                return {
+                    Code:201,
+                    msg:'登陆成功',
+                    user:f_user
+                }
+            }
+            else{
+                return  {
+                    Code:404,
+                    msg:'密码错误'
+                }
             }
         }
     }

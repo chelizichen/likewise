@@ -1,4 +1,4 @@
-import { Entity,Column,PrimaryGeneratedColumn, PrimaryColumn, AfterInsert, AfterRemove } from 'typeorm'
+import { Entity,Column,PrimaryGeneratedColumn, PrimaryColumn, AfterInsert, AfterRemove, IsNull } from 'typeorm'
 @Entity() // 标注为一个实体类
 export class UserEnity{
     @PrimaryGeneratedColumn()
@@ -10,6 +10,9 @@ export class UserEnity{
 
     @Column()
     password:string;
+
+    @Column()
+    userName:string
 
     @AfterInsert()
     logInsert()
