@@ -24,8 +24,12 @@ export class UserDTO{
     // @Exclude()
     id:number
     
-    @Exclude()
+    @Expose()
     email:string
+
+    @Exclude()
+    password:string
+
 }
 
 export class AdminUserDTO{
@@ -36,4 +40,7 @@ export class AdminUserDTO{
     
     @Expose()
     email:string
+
+    @Expose()
+    password:string
 }

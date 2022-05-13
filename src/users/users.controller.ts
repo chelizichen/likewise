@@ -7,58 +7,40 @@ export class UsersController{
     constructor(private readonly UsersService:UsersService) {}
 
     @Post('/signup')
-    createUser(@Body() body:UserPipe)
-    {
-        return this.UsersService.create(body)
+    async createUser(@Body() body:UserPipe){
+        return await this.UsersService.create(body)
     }
+
     @UseInterceptors(new SerializeInterceptor(UserDTO))
     @Get("/:id") // 在Url 中 Id 会被解析称为 string  的类型
-    async findUser(@Param("id") id:string)
-    {
+    async findUser(@Param("id") id:string){
         console.log('步骤2 请求处理完但未发出');
-        const user = await this.UsersService.findOne(parseInt(id))
-        if(user === null)
-        {
-            HttpCode(404)
-            throw new NotFoundException('user not found ')
-        }
-        return user
+        return await this.UsersService.findOne(parseInt(id))
     }
 
     @UseInterceptors(new SerializeInterceptor(AdminUserDTO))
     @Get("/admin/:id")
-    async adminFindUser(@Param("id") id:string)
-    {
-        const user = await this.UsersService.findOne(parseInt(id))
-        if(user === null)
-        {
-            HttpCode(404)
-            throw new NotFoundException('user not found ')
-        }
-        return user
+    async adminFindUser(@Param("id") id:string){
+        console.log('步骤2 请求处理完但未发出');
+        return await this.UsersService.findOne(parseInt(id))
     }
 
-    
     @Get()
-    findAllUsers(@Query('email') email:string)
-    {
+    async findAllUsers(@Query('email') email:string){
         return this.UsersService.find(email)
     }
 
-    @Delete("/:id")
-    deleteUser(@Param("id") id:string)
-    {
-        console.log(id);
-        console.log(typeof id);
-        
-        return this.UsersService.remove(parseInt(id))
+    @Get("/admin/delete/:id")
+    async deleteUser(@Param("id") id:string){
+        return await this.UsersService.remove(parseInt(id))
     }
 
-    @Patch("/:id")
-    updateUser(@Param("id") id:string,@Body() body:UpdateDTO)
-    {
-        return this.UsersService.update(parseInt(id),body)
+    @Post("/admin/update/:id")
+    AdminupdateUser(@Param("id") id:string,@Body() body:UpdateDTO){
+        return this.UsersService.AdminUpdate(parseInt(id),body)
     }
-
-
+    @Post("/update")
+    updateUser(@Body() body:UpdateDTO){
+        return this.UsersService.Update(body)
+    }
 }
