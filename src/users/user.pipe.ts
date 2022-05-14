@@ -1,16 +1,22 @@
 import { Exclude, Expose } from 'class-transformer'
 import {IsEmail, IsNumber, IsOptional, IsString} from 'class-validator'
-export class UserPipe
-{
+export class UserPipe{
     @IsString()
     password:string
 
     @IsEmail()
     email:string
-    
+
     @IsOptional()
     @IsString()
     userName:string
+}
+export class InfoPipe{
+    @IsString()
+    email:string
+    
+    @IsOptional()
+    password:string
 }
 export class UpdateDTO
 {

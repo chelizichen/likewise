@@ -1,6 +1,11 @@
 import { Exclude, Expose } from "class-transformer";
 import { IsNumber, IsOptional, IsString } from "class-validator";
 
+export class SongNameDTO{
+    @IsString()
+    songName:string
+}
+
 // 普通用户请求歌曲
 // 验证请求 需要传 至少Type 
 // Singer Rank 为可选项

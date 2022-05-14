@@ -2,11 +2,17 @@ import { HttpCode, Injectable, NotFoundException } from "@nestjs/common";
 import { UserEnity } from "./users.enity";
 import { Entity, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { UserPipe } from "./user.pipe";
+import { InfoPipe, UserPipe } from "./user.pipe";
 @Injectable()
 export class UsersService
 {
     constructor(@InjectRepository(UserEnity) private readonly repo:Repository<UserEnity>){}
+    async findByEmail(body:InfoPipe) { 
+        const { email } = body
+        return this.repo.findOneBy({
+            email
+        })
+    }
     async create(body:UserPipe){
         const {password,email,userName} = body
         const f_user = await this.repo.findOneBy({

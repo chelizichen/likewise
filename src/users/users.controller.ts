@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Query,Patch, NotFoundException, HttpCode, UseInterceptors } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import {AdminUserDTO, UpdateDTO, UserDTO, UserPipe} from './user.pipe'
+import {AdminUserDTO, InfoPipe, UpdateDTO, UserDTO, UserPipe} from './user.pipe'
 import { SerializeInterceptor } from "src/interceptor/serialize.interceptor";
 @Controller('user')
 export class UsersController{
@@ -9,6 +9,12 @@ export class UsersController{
     @Post('/signup')
     async createUser(@Body() body:UserPipe){
         return await this.UsersService.create(body)
+    }
+
+    @Post('/info')
+    async findByEmail(@Body() body:InfoPipe)
+    {
+        return await this.UsersService.findByEmail(body)
     }
 
     @UseInterceptors(new SerializeInterceptor(UserDTO))
