@@ -9,6 +9,6 @@ import { FavoService } from "./favo.service";
 @Module({
     imports:[TypeOrmModule.forFeature([FavoEnity]),SongsModule,UsersModule],
     controllers:[FavoController],
-    providers:[FavoService]
+    providers:[FavoService],
 })
 export class FavoModule{}

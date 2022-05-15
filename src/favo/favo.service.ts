@@ -27,4 +27,14 @@ export class FavoService {
             userId:id
         })
     }
+    async SetDisFav(query: SetFavoInterface) {
+        const { userId, songId } = query
+        const UserObj = await this.UserService.findOne(userId)
+        const SongObj = await this.SongsService.findById(songId)
+        const item = await this.repo.findOneBy({
+            userId:UserObj['id'],
+            songId:SongObj['id']
+        })
+        return await this.repo.delete(item)
+    }
 }

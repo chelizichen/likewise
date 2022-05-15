@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
 import { SerializeInterceptor } from "src/interceptor/serialize.interceptor";
 import { CommonUserDTO, SongNameDTO, SongsDTO } from "./songs.pipe";
 import { SongsSerivce } from "./songs.service";
@@ -23,6 +23,10 @@ export class SongsController{
     @Post("/songname")
     async findByName(@Body() body:SongNameDTO){
         return await this.SongsService.findByName(body)
+    }
 
+    @Get("/songId")
+    async findById(@Query("id") id:number) {
+        return this.SongsService.findById(id)
     }
 }
