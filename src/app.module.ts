@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ReportsEnity } from './reports/reports.enity';
+import { FavoEnity } from './favo/favo.enity';
+import { FavoModule } from './favo/favo.module';
 // import { GoodsModule } from './goods/goods.module';
-import { ReportsModule } from './reports/reports.module';
 import { SongsEnity } from './songs/songs.enity';
 import { SongsModule } from './songs/songs.module';
 import { UserEnity } from './users/users.enity';
@@ -11,10 +11,10 @@ import { UsersModule } from './users/users.module';
   imports: [TypeOrmModule.forRoot({
     type:'sqlite', // 数据库类型,
     database:'db.sqlite',
-    entities:[UserEnity,ReportsEnity,SongsEnity],
+    entities:[UserEnity,SongsEnity,FavoEnity],
     synchronize:true
 
-  }),ReportsModule,UsersModule,SongsModule],
+  }),UsersModule,SongsModule,FavoModule],
   controllers: [],
   providers: [],
 })

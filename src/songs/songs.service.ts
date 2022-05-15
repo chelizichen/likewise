@@ -20,4 +20,9 @@ export class SongsSerivce{
         const { songName } = body
         return await this.repo.query(`select * from songs_enity where songName like "%${songName}%"`)
     }
+    async findById(id:number){
+        return await this.repo.findOneBy({
+            id
+        })
+    }
 }
