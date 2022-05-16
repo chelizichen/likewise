@@ -30,10 +30,4 @@ export class FavoController {
     async findAllFav(@Query("id") id:any){
         return await this.FavoService.findAllFav(id)
     }
-    @UseInterceptors(FileInterceptor("file"))
-    @Post('/upload')
-    @Header("Content-Type","application/msword")
-    async UploadFile(@UploadedFile() file){
-        return await this.FavoService.UpLoadFile(file)
-    }
 }

@@ -39,17 +39,4 @@ export class FavoService {
         })
         return await this.repo.delete(item)
     }
-    async UpLoadFile(file){
-        const name = Date.now() + file.originalname
-        const buffer = file.buffer
-        const url = "/Users/leemulus/Desktop/Nest/like-wise/dist/upload/" + name
-        const writeFiles = createWriteStream(join(__dirname,"../../dist/",'upload',name))
-        writeFiles.write(buffer)
-        
-        let other = {
-            name,
-            url,
-        }
-        return other
-    }
 }
