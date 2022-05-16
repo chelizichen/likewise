@@ -1,5 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { createWriteStream } from "fs";
+import { join } from "path";
 import { SongsSerivce } from "src/songs/songs.service";
 import { UsersService } from "src/users/users.service";
 import { Repository } from "typeorm";
@@ -36,5 +38,18 @@ export class FavoService {
             songId:SongObj['id']
         })
         return await this.repo.delete(item)
+    }
+    async UpLoadFile(file){
+        const name = Date.now() + file.originalname
+        const buffer = file.buffer
+        const url = "/Users/leemulus/Desktop/Nest/like-wise/dist/upload/" + name
+        const writeFiles = createWriteStream(join(__dirname,"../../dist/",'upload',name))
+        writeFiles.write(buffer)
+        
+        let other = {
+            name,
+            url,
+        }
+        return other
     }
 }

@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Header, Param, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
 import { SetFavoDto } from "./favo.pipe";
 import { FavoService } from "./favo.service";
 
@@ -28,5 +29,11 @@ export class FavoController {
     @Get('/findAll')
     async findAllFav(@Query("id") id:any){
         return await this.FavoService.findAllFav(id)
+    }
+    @UseInterceptors(FileInterceptor("file"))
+    @Post('/upload')
+    @Header("Content-Type","application/msword")
+    async UploadFile(@UploadedFile() file){
+        return await this.FavoService.UpLoadFile(file)
     }
 }
