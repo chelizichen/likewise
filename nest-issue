@@ -1,0 +1,10 @@
+async addUserType(){
+    addColumn 不可使用
+    const colum = new TableColumn({
+        name:"userType",
+        type:"integer",
+    })
+    return await this.repo.queryRunner.addColumn("user_enity",colum)
+    // return await this.repo.query("alter table user_enity add userType integer")
+}
+
