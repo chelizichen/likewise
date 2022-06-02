@@ -10,4 +10,5 @@ export class FilesController{
     async UploadFile(@UploadedFile() file){
         return await this.FilesService.UpLoadFile(file)
     }
+    
 }

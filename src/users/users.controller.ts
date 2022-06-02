@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Query,Patch, NotFoundException, HttpCode, UseInterceptors } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import {AdminUserDTO, InfoPipe, UpdateDTO, UserDTO, UserPipe} from './user.pipe'
+import {AdminUserDTO, DelUserDTO, InfoPipe, UpdateDTO, UserDTO, UserPipe} from './user.pipe'
 import { SerializeInterceptor } from "src/interceptor/serialize.interceptor";
 @Controller('user')
 export class UsersController{
@@ -42,11 +42,36 @@ export class UsersController{
     }
 
     @Post("/admin/update/:id")
-    AdminupdateUser(@Param("id") id:string,@Body() body:UpdateDTO){
-        return this.UsersService.AdminUpdate(parseInt(id),body)
+    async AdminupdateUser(@Param("id") id:string,@Body() body:UpdateDTO){
+        return await this.UsersService.AdminUpdate(parseInt(id),body)
     }
     @Post("/update")
-    updateUser(@Body() body:UpdateDTO){
-        return this.UsersService.Update(body)
+    async updateUser(@Body() body:UpdateDTO){
+        return await this.UsersService.Update(body)
     }
+
+    @Post("/list")
+    async postAllUser(){
+        return await this.UsersService.getAllUser()
+    }
+    @Get("/list")
+    async getAllUser(){
+        return await this.UsersService.getAllUser()
+    }
+
+    @Post("/deluser")
+    async name(@Body() body:DelUserDTO) {
+        if(body.userType === "超级管理员"){
+            return await this.UsersService.delUserById(body.id)
+        }else{
+            return "删除失败"
+        }
+    }
+
+    // @Post("/add")
+    // async addcolumn(){
+    //     const connection = getConnection()
+    //     const queryRunner:QueryRunner = connection.createQueryRunner()
+    //     return await this.UsersService.addUserType(queryRunner);
+    // }
 }

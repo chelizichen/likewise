@@ -1,6 +1,6 @@
-import { HttpCode, Injectable, NotFoundException } from "@nestjs/common";
+import { HttpCode, Injectable, NotFoundException, Query } from "@nestjs/common";
 import { UserEnity } from "./users.enity";
-import { Entity, Repository } from "typeorm";
+import {  Connection, QueryRunner, Repository, TableColumn } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { InfoPipe, UserPipe } from "./user.pipe";
 @Injectable()
@@ -11,6 +11,11 @@ export class UsersService
         const { email } = body
         return this.repo.findOneBy({
             email
+        })
+    }
+    async delUserById(id: number) {
+        return await this.repo.delete({
+            id
         })
     }
     async create(body:UserPipe){
@@ -98,4 +103,20 @@ export class UsersService
 
         return await this.repo.remove(user)
     }
+    async getAllUser() {
+        const user = await this.repo.find()
+        return user
+    }
+
+    
+
+    // async addUserType(queryRunner:QueryRunner){
+    //     let colum = new TableColumn({
+    //         name:"userType",
+    //         type:"varchar",
+    //         isNullable:true,
+    //     })
+    //     return queryRunner.addColumn("user_enity",colum)
+    // }
 }
+

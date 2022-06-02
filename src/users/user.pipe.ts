@@ -1,5 +1,6 @@
 import { Exclude, Expose } from 'class-transformer'
 import {IsEmail, IsNumber, IsOptional, IsString} from 'class-validator'
+export type adminType = "超级管理员" | "普通管理员"
 export class UserPipe{
     @IsString()
     password:string
@@ -31,6 +32,14 @@ export class UpdateDTO
     @IsString()
     @IsOptional()
     userName:string
+}
+
+export class DelUserDTO{
+    @IsString()
+    userType:adminType
+
+    @IsNumber()
+    id:number
 }
 export class UserDTO{
     // 一个是展示 一个是不展示

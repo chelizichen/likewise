@@ -14,6 +14,9 @@ export class UserEnity{
     @Column()
     userName:string
 
+    @Column()
+    userType:string
+
     @AfterInsert()
     logInsert()
     {
