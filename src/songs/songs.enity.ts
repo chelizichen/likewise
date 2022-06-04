@@ -12,11 +12,11 @@ export class SongsEnity{
     singer:string
 
     @PrimaryColumn()
-    @Column()
+    @Column({default:0})
     rank:number
 
     @Column()
-    time:number
+    time:string
 
     @Column() // 1 飙升榜 2 新歌榜 3 原创榜
     type:number

@@ -61,7 +61,7 @@ export class UsersController{
 
     @Post("/deluser")
     async name(@Body() body:DelUserDTO) {
-        if(body.userType === "超级管理员"){
+        if(body.userType === "超级管理员" || body.userType === "普通用户"){
             return await this.UsersService.delUserById(body.id)
         }else{
             return "删除失败"

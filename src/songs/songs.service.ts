@@ -2,11 +2,29 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { SongsEnity } from "./songs.enity";
-import { SongNameDTO, SongsDTO } from "./songs.pipe";
+import { AddSongDTO, SongNameDTO, SongsDTO } from "./songs.pipe";
 
 @Injectable()
 export class SongsSerivce{
     constructor(@InjectRepository(SongsEnity) private readonly repo:Repository<SongsEnity>){}
+    async deleteSongById(id: number) {
+        return await this.repo.delete({
+            id
+        })
+    }
+
+    async addSongs(body: AddSongDTO) {
+        const {singer,songName,time,type,rank} = body
+        const newSong = this.repo.create({
+            singer,
+            songName,
+            time,
+            type,
+            rank,
+        })
+        return this.repo.save(newSong)
+    }
+
     async findByType(body: SongsDTO) {
         const { type } = body
         return this.repo.findBy({
