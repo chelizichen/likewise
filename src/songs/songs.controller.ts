@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
 import { SerializeInterceptor } from "src/interceptor/serialize.interceptor";
-import { AddSongDTO, CommonUserDTO, DeleteSongDto, SongNameDTO, SongsDTO } from "./songs.pipe";
+import { AddSongDTO, CommonUserDTO, DeleteSongDto, ModifySongDto, SongNameDTO, SongsDTO } from "./songs.pipe";
 import { SongsSerivce } from "./songs.service";
 
 @Controller("songs")
@@ -41,13 +41,39 @@ export class SongsController{
 
     @Get("/songId")
     async findById(@Query("id") id:number) {
-        return this.SongsService.findById(id)
+        return await this.SongsService.findById(id)
     }
 
     @Post("/del")
     async delSongById(@Body() body:DeleteSongDto) {
-        return this.SongsService.deleteSongById(body.id)
+        const { userType } = body
+        if(userType === "普通管理员" || userType === "超级管理员"){
+            return await this.SongsService.deleteSongById(body.id)
+        }
+        else{
+            return {
+                msg:"您不是管理员不能删除数据",
+                code:400
+            }
+        }
     }
 
+    @Post("/modify")
+    async modifySong(@Body() body:ModifySongDto){
+        const { userType } = body
+        if(userType === "普通管理员" || userType === "超级管理员"){
+            const data = await this.SongsService.modifySong(body)
+            return {
+                data,
+                code:201
+            }
+        }
+        else{
+            return {
+                msg:"您不是管理员不能修改歌曲",
+                code:400
+            }
+        }
+    }
 
 }

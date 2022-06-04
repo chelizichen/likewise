@@ -2,6 +2,30 @@ import { Exclude, Expose } from "class-transformer";
 import { IsNumber, IsOptional, IsString } from "class-validator";
 import { adminType } from "src/users/user.pipe";
 
+
+export class ModifySongDto{
+   @IsString()
+   userType:adminType
+
+   @IsNumber()
+   id:number
+
+   @IsString()
+   songName:string
+
+   @IsString()
+   singer:string
+
+   @IsOptional()
+   rank:number
+
+   @IsString()
+   time:string
+
+   @IsNumber()
+   type:number
+
+}
 // 添加歌曲
 export class AddSongDTO{
 
@@ -32,6 +56,8 @@ export class SongNameDTO{
 
 // 删除歌曲
 export class DeleteSongDto{
+    @IsString()
+    userType:adminType
     @IsNumber()
     id:number
 }
