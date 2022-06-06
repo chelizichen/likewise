@@ -25,9 +25,19 @@ export class FavoService {
         return await this.repo.save(item)
     }
     async findAllFav(id: number) {
-        return this.repo.findBy({
+        console.log("id",id);
+        const SongId = await this.repo.findBy({
             userId:id
         })
+        console.log(SongId);
+        const allSongs = []
+        for(let v of SongId){
+            console.log(v.songId);
+            allSongs.push(await this.SongsService.findById(v.songId))
+        }
+        return allSongs
+        // console.log(SongId);
+        
     }
     async SetDisFav(query: SetFavoInterface) {
         const { userId, songId } = query

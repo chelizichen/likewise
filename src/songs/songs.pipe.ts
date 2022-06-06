@@ -79,9 +79,8 @@ export class SongsDTO{
 }
 
 // 用户接受数据
-// 并不返回ID
 export class CommonUserDTO{
-    @Exclude()
+    @Expose()
     id:number
 
     @Exclude()

@@ -27,7 +27,7 @@ export class FavoController {
     }
 
     @Get('/findAll')
-    async findAllFav(@Query("id") id:any){
+    async findAllFav(@Query("userId") id:any){
         return await this.FavoService.findAllFav(id)
     }
 }
