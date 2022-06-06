@@ -1,4 +1,10 @@
 import { Entity,Column,PrimaryGeneratedColumn, PrimaryColumn, AfterInsert, AfterRemove, IsNull } from 'typeorm'
+import { adminType } from './user.pipe';
+enum UserRole {
+    SUPERADMIN="超级管理员",
+    ADMIN="普通管理员",
+    CommonUser="普通用户"
+}
 @Entity() // 标注为一个实体类
 export class UserEnity{
     @PrimaryGeneratedColumn()
@@ -14,8 +20,10 @@ export class UserEnity{
     @Column()
     userName:string
 
-    @Column()
-    userType:string
+    @Column({
+        default:UserRole.CommonUser
+    })
+    userType:adminType
 
     @AfterInsert()
     logInsert()

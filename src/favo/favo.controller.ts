@@ -13,6 +13,7 @@ export class FavoController {
     constructor(private readonly FavoService:FavoService){}
     @Get("/setFavo")
     async SetFavo(@Query() query:SetFavoInterface){
+        console.log('被请求了');
         return await this.FavoService.SetFavo(query)
     }
 

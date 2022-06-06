@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Query,Patch, NotFoundException, HttpCode, UseInterceptors } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import {AdminUserDTO, DelUserDTO, InfoPipe, UpdateDTO, UserDTO, UserPipe} from './user.pipe'
+import {AdminUserDTO, ADMINUserPipe, DelUserDTO, InfoPipe, UpdateDTO, UserDTO, UserPipe} from './user.pipe'
 import { SerializeInterceptor } from "src/interceptor/serialize.interceptor";
 @Controller('user')
 export class UsersController{
@@ -9,6 +9,16 @@ export class UsersController{
     @Post('/signup')
     async createUser(@Body() body:UserPipe){
         return await this.UsersService.create(body)
+    }
+
+    @Post("/admin/create")
+    async adminCreateUser(@Body() body:ADMINUserPipe){
+        const { userType } = body
+        if(userType === "普通管理员" || userType === "超级管理员"){
+            return await this.UsersService.adminCreate(body)
+        }else{
+            return "您不是管理员"
+        }
     }
 
     @Post('/info')

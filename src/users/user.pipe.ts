@@ -1,6 +1,28 @@
 import { Exclude, Expose } from 'class-transformer'
 import {IsEmail, IsNumber, IsOptional, IsString} from 'class-validator'
 export type adminType = "超级管理员" | "普通管理员" | "普通用户"
+export type ExtractAdmin = Extract<adminType,"超级管理员"|"普通管理员">
+
+// export 
+export class ADMINUserPipe{
+    // 用户类型
+    @IsString()
+    adminType:adminType
+
+    @IsString()
+    password:string
+
+    @IsEmail()
+    email:string
+
+    @IsString()
+    userName:string
+
+    // 用户
+    @IsString()
+    userType:ExtractAdmin
+}
+
 export class UserPipe{
     @IsString()
     password:string

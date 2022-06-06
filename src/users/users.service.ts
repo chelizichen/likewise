@@ -2,7 +2,7 @@ import { HttpCode, Injectable, NotFoundException, Query } from "@nestjs/common";
 import { UserEnity } from "./users.enity";
 import {  Connection, QueryRunner, Repository, TableColumn } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { InfoPipe, UserPipe } from "./user.pipe";
+import { ADMINUserPipe, InfoPipe, UserPipe } from "./user.pipe";
 @Injectable()
 export class UsersService
 {
@@ -108,7 +108,13 @@ export class UsersService
         return user
     }
 
-    
+    async adminCreate(body:ADMINUserPipe){
+        const {email,userName,adminType,password} = body
+        const user = this.repo.create({
+            email,password,userName,userType:adminType
+        })
+        return this.repo.save(user)
+    }
 
     // async addUserType(queryRunner:QueryRunner){
     //     let colum = new TableColumn({
