@@ -54,6 +54,13 @@ export class UpdateDTO
     @IsString()
     @IsOptional()
     userName:string
+
+    @IsString()
+    @IsOptional()
+    adminType:adminType
+
+    @IsString()
+    userType:ExtractAdmin
 }
 
 export class DelUserDTO{

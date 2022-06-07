@@ -77,7 +77,7 @@ export class UsersService
 
     // update 时 需要使用 filter 过滤异常
     async AdminUpdate(id:number,attr:Partial<UserEnity>){
-        const user = await this.findOne(id)
+        const user = await this.repo.findOneBy({id})
         if(!user)
         {
             throw new NotFoundException("没有找到数据")
