@@ -18,6 +18,7 @@ export class UsersService
             id
         })
     }
+    // 方法有问题
     async create(body:UserPipe){
         const {password,email,userName} = body
         const f_user = await this.repo.findOneBy({

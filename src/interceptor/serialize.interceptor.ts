@@ -1,9 +1,16 @@
-import { CallHandler, ExecutionContext, NestInterceptor } from "@nestjs/common";
+import { CallHandler, ExecutionContext, NestInterceptor, UseInterceptors } from "@nestjs/common";
 import { plainToClass, plainToInstance } from "class-transformer";
 import { map, Observable } from "rxjs";
+
+export type ClassConstructor={
+    new(...args:any[]):{}
+}
+export function Serialze(dto:ClassConstructor){
+    return UseInterceptors(new SerializeInterceptor(dto))
+} 
 export class SerializeInterceptor implements NestInterceptor
 {
-    constructor( private dto:any){}
+    constructor( private dto:ClassConstructor){}
     intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> {
         // 执行某些事 在请求被处理之前
         console.log('步骤1请求处理之前');

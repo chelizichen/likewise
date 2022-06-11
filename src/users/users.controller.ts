@@ -6,6 +6,7 @@ import { SerializeInterceptor } from "src/interceptor/serialize.interceptor";
 export class UsersController{
     constructor(private readonly UsersService:UsersService) {}
 
+    // 方法有问题
     @Post('/signup')
     async createUser(@Body() body:UserPipe){
         return await this.UsersService.create(body)

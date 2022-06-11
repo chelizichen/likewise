@@ -11,13 +11,16 @@ export class FilesService{
     async UpLoadFile(file){
         const name:string = Date.now() + file.originalname
         const buffer = file.buffer
-        const url:string = "/Users/leemulus/Desktop/Nest/like-wise/dist/upload/" + name
-        const writeFiles = createWriteStream(join(__dirname,"../../dist/",'upload',name))
+        const url:string = "/Users/leemulus/Desktop/Nest/like-wise/dist/files/" + name
+        // const writeFiles = createWriteStream(join(__dirname,"../../dist/",'upload',name))
+        const writeFiles = createWriteStream(join(__dirname,name))
         writeFiles.write(buffer)
         const fileInfo = this.repo.create({
             fileName:name,
             fileUrl:url
         })
+        console.log(fileInfo);
+        
         return await this.repo.save(fileInfo)
     }
 }
