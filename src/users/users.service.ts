@@ -2,12 +2,12 @@ import { HttpCode, Injectable, NotFoundException, Query } from "@nestjs/common";
 import { UserEnity } from "./users.enity";
 import {  Connection, QueryRunner, Repository, TableColumn } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { ADMINUserPipe, InfoPipe, UserPipe } from "./user.pipe";
+import { ADMINUserPipe, EmailPipe, InfoPipe, UserPipe } from "./user.pipe";
 @Injectable()
 export class UsersService
 {
     constructor(@InjectRepository(UserEnity) private readonly repo:Repository<UserEnity>){}
-    async findByEmail(body:InfoPipe) { 
+    async findByEmail(body:EmailPipe) { 
         const { email } = body
         return this.repo.findOneBy({
             email
@@ -18,6 +18,15 @@ export class UsersService
             id
         })
     }
+
+    async singUp(body:UserPipe){
+        const { email,userName,password } = body
+        const user = this.repo.create({
+            email,password,userName
+        })
+        return this.repo.save(user)
+    }
+
     // 方法有问题
     async create(body:UserPipe){
         const {password,email,userName} = body
@@ -49,6 +58,7 @@ export class UsersService
             }
         }
     }
+
     async find(email:string){
         const user = await this.repo.findBy({
             email

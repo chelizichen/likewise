@@ -2,16 +2,22 @@ import { Body, Controller, Delete, Get, Param, Post, Query,Patch, NotFoundExcept
 import { UsersService } from "./users.service";
 import {AdminUserDTO, ADMINUserPipe, DelUserDTO, InfoPipe, UpdateDTO, UserDTO, UserPipe} from './user.pipe'
 import { SerializeInterceptor } from "src/interceptor/serialize.interceptor";
+import { AuthService } from "./auth.service";
 @Controller('user')
 export class UsersController{
-    constructor(private readonly UsersService:UsersService) {}
+    constructor(private readonly UsersService:UsersService,
+        private readonly AuthService:AuthService) {}
 
-    // 方法有问题
     @Post('/signup')
     async createUser(@Body() body:UserPipe){
-        return await this.UsersService.create(body)
+        return await this.AuthService.signUp(body)
     }
-
+    
+    @Post("/signin")
+    async login(@Body() body:UserPipe){
+        return await this.AuthService.signIn(body)
+    }
+    
     @Post("/admin/create")
     async adminCreateUser(@Body() body:ADMINUserPipe){
         const { userType } = body

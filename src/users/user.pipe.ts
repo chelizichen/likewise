@@ -41,6 +41,12 @@ export class InfoPipe{
     @IsOptional()
     password:string
 }
+
+export class EmailPipe{
+    @IsEmail()
+    email:string
+    
+}
 export class UpdateDTO
 {
     @IsString()
